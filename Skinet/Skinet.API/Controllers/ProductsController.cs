@@ -7,8 +7,6 @@ using Skinet.Core.Specifications;
 
 namespace Skinet.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
     {
         [HttpGet]

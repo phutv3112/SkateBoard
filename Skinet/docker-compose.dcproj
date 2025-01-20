@@ -5,7 +5,6 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>a54a4a9f-ac61-4a1e-bd5b-f5449ca0d8e3</ProjectGuid>
-    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>skinet.api</DockerServiceName>
   </PropertyGroup>
