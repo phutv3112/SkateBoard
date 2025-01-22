@@ -27,7 +27,7 @@ namespace Skinet.API.Controllers
             var result = await cartService.DeleteCartAsync(id);
             if (!result)
                 return BadRequest("Problem deleting the cart");
-            return Ok("Delete cart successfully");
+            return Ok();
         }
     }
 }

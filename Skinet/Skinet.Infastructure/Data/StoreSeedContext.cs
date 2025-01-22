@@ -15,6 +15,14 @@ namespace Skinet.Infastructure.Data
                 context.Products.AddRange(products);
                 await context.SaveChangesAsync();
             }
+            if (!context.DeliveryMethods.Any())
+            {
+                var deliveryDataJson = await File.ReadAllTextAsync("../Skinet.Infastructure/Data/SeedData/delivery.json");
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryDataJson);
+                if (deliveryMethods == null) return;
+                context.DeliveryMethods.AddRange(deliveryMethods);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

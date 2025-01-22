@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Skinet.API.Middlewares;
@@ -47,11 +47,30 @@ builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<StoreContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = false;  // Bảo mật cookie khỏi truy cập JavaScript
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // Cho phép trên HTTP (không HTTPS)
+    options.Cookie.SameSite = SameSiteMode.None;  // Cho phép gửi trong cross-origin request
+    //options.Cookie.Name = ".AspNetCore.Identity.Application";  // Đảm bảo tên chính xác
+    //options.LoginPath = "/account/login";  // Đường dẫn login
+});
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().AllowAnyOrigin());
+//app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+//     .WithOrigins("http://localhost:4200"));
+
+app.UseCors(policy =>
+    policy.WithOrigins("http://localhost:4200")  // Đúng địa chỉ frontend
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials());  // Cho phép gửi cookie
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
