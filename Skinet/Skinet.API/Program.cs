@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Skinet.API.Middlewares;
+using Skinet.API.SignalR;
 using Skinet.Core.Entities;
 using Skinet.Core.Interfaces;
 using Skinet.Infastructure.Data;
@@ -23,6 +24,9 @@ builder.Services.AddDbContext<StoreContext>(x =>
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddSignalR();
 
 //================== Config Serilog write logs to file
 //Log.Logger = new LoggerConfiguration()
@@ -80,10 +84,12 @@ app.UseCors(policy =>
 
 //app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<AppUser>();
+app.MapHub<NotificationHub>("/hub/notifications");
 
 // Seed Data
 try

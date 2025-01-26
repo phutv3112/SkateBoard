@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skinet.API", "Skinet.API\Skinet.API.csproj", "{C1E4E05C-A683-4FBC-A283-2BAE007B5E98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skinet.API", "Skinet.API\Skinet.API.csproj", "{C1E4E05C-A683-4FBC-A283-2BAE007B5E98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skinet.Core", "Skinet.Core\Skinet.Core.csproj", "{EB9C7C7D-9D6D-45E2-89D5-12CDBE36E44A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skinet.Core", "Skinet.Core\Skinet.Core.csproj", "{EB9C7C7D-9D6D-45E2-89D5-12CDBE36E44A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skinet.Infastructure", "Skinet.Infastructure\Skinet.Infastructure.csproj", "{8D75A6CB-8ACA-4DB9-ADF2-3F826001C6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skinet.Infastructure", "Skinet.Infastructure\Skinet.Infastructure.csproj", "{8D75A6CB-8ACA-4DB9-ADF2-3F826001C6EA}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A54A4A9F-AC61-4A1E-BD5B-F5449CA0D8E3}"
 EndProject
