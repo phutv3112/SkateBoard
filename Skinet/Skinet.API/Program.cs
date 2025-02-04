@@ -47,9 +47,11 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 
 builder.Services.AddSingleton<ICartService, CartService>();
 
-builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>()
-    .AddEntityFrameworkStores<StoreContext>();
+    .AddEntityFrameworkStores<StoreContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -61,6 +63,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ICouponService, CouponService>();
 
 var app = builder.Build();
 

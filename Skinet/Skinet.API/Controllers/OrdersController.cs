@@ -57,6 +57,7 @@ namespace Skinet.API.Controllers
                 OrderItems = items,
                 PaymentIntentId = cart.PaymentIntentId,
                 Subtotal = items.Sum(i => i.Price * i.Quantity),
+                Discount = orderDto.Discount
             };
 
             unit.Repository<Order>().Add(order);

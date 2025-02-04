@@ -20,6 +20,7 @@ namespace Skinet.Infastructure.Config
                 .HasConversion(o => o.ToString(), 
                 o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o));
             builder.Property(o => o.Subtotal).HasColumnType("decimal(18,2)");
+            builder.Property(o => o.Discount).HasColumnType("decimal(18,2)");
             builder.HasMany(x => x.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
 
             // config datetime local

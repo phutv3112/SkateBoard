@@ -11,5 +11,6 @@ namespace Skinet.API.DTOs
         public ShippingAddress ShippingAddress { get; set; } = default!;
         public Guid DeliveryMethodId { get; set; } = default!;
         public PaymentSummary PaymentSummary { get; set; } = default!;
+        public decimal Discount { get; set; }
     }
 }
