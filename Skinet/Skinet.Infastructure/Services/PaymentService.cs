@@ -35,7 +35,7 @@ namespace Skinet.Infastructure.Services
                 var options = new PaymentIntentCreateOptions
                 {
                     Amount = total,
-                    Currency = "usd",
+                    Currency = "vnd",
                     PaymentMethodTypes = new List<string> { "card" }
                 };
                 var intent = await service.CreateAsync(options);
