@@ -118,6 +118,28 @@ namespace Skinet.Infastructure.Data.Libraries
 
             return baseUrl;
         }
+
+        public string CreateRefundSecureHash(List<string> secureHashList, string vnpHashSecret)
+        {
+            //string vnpSecureData = string.Empty;
+
+            //foreach (var (key, value) in _requestData.Where(kv => !string.IsNullOrEmpty(kv.Value)))
+            //{
+            //    vnpSecureData += value + "|";
+            //}
+
+            //var signData = vnpSecureData;
+            //if (signData.Length > 0)
+            //{
+            //    signData = signData.Remove(vnpSecureData.Length - 1, 1);
+            //}
+            var signData = string.Join("|", secureHashList);
+
+            var vnpSecureHash = HmacSha512(vnpHashSecret, signData);
+
+            return vnpSecureHash;
+        }
+
         public bool ValidateSignature(string inputHash, string secretKey)
         {
             var rspRaw = GetResponseData();

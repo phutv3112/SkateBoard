@@ -8,6 +8,7 @@ using Skinet.Core.Interfaces;
 using Skinet.Infastructure.Data;
 using Skinet.Infastructure.Data.Repositories;
 using Skinet.Infastructure.Services;
+using Skinet.Infastructure.Services.VNPay;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
+
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 var app = builder.Build();
 
