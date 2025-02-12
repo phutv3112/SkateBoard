@@ -16,9 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<StoreContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -29,7 +26,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddSignalR();
 
-//================== Config Serilog write logs to file
+//================== Config Serilog write logs to file line 29-35 ===================
 //Log.Logger = new LoggerConfiguration()
 //    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
 //    .CreateLogger();
@@ -49,19 +46,11 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 builder.Services.AddSingleton<ICartService, CartService>();
 
 builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<StoreContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = false;  // Bảo mật cookie khỏi truy cập JavaScript
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // Cho phép trên HTTP (không HTTPS)
-    options.Cookie.SameSite = SameSiteMode.None;  // Cho phép gửi trong cross-origin request
-    //options.Cookie.Name = ".AspNetCore.Identity.Application";  // Đảm bảo tên chính xác
-    //options.LoginPath = "/account/login";  // Đường dẫn login
-});
 
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
@@ -72,23 +61,8 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-//app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-//     .WithOrigins("http://localhost:4200"));
-
-app.UseCors(policy =>
-    policy.WithOrigins("http://localhost:4200")  // Đúng địa chỉ frontend
-          .AllowAnyHeader()
-          .AllowAnyMethod()
-          .AllowCredentials());  // Cho phép gửi cookie
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+    .WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -104,8 +78,9 @@ try
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<StoreContext>();
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
         await context.Database.MigrateAsync();
-        await StoreSeedContext.SeedAsync(context);
+        await StoreSeedContext.SeedAsync(context, userManager);
     }
 }
 catch (Exception ex)
